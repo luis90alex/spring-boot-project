@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: store
+app:
+  page-size: 10
+  payment-gateway: paypal
+stripe:
+  apiUrl : https://api.stripe.com
+  enabled: true
+  timeout: 1000
+  supported-currencies: USD,EUR,GBP
+user-registration:
+  host: test-host
+  port: 8080
