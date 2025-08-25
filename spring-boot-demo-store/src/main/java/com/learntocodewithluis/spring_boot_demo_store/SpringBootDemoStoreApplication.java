@@ -19,7 +19,6 @@ public class SpringBootDemoStoreApplication {
 		User user = new User("test-name", (long) 23, "email@mail.com","pass");
 		var userService = context.getBean(UserService.class);
 		userService.registerUser(user);
-		userService.registerUser(user);
 	}
 
 }
