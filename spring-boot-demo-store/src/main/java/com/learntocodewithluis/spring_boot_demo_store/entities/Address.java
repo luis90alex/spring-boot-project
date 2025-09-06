@@ -5,6 +5,8 @@ import lombok.*;
 
 @Setter
 @Getter
+@Builder
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -12,6 +14,7 @@ import lombok.*;
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false, name ="id")
     private Long id;
 
     @Column(nullable = false, name ="street")
@@ -25,4 +28,9 @@ public class Address {
 
     @Column(nullable = false, name ="state")
     private String state;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @ToString.Exclude
+    private User user;
 }

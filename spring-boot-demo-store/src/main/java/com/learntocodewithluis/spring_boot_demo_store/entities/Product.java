@@ -3,18 +3,17 @@ package com.learntocodewithluis.spring_boot_demo_store.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.math.BigDecimal;
 
+@Builder
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Entity
-@Table(name = "tags")
-public class Tag {
+@ToString
+@Table(name = "products")
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, name ="id")
@@ -23,11 +22,12 @@ public class Tag {
     @Column(nullable = false, name ="name")
     private String name;
 
-    @ManyToMany(mappedBy = "tags")
-    @ToString.Exclude
-    private Set<User> users = new HashSet<>();
+    @Column(nullable = false, name ="price")
+    private BigDecimal price;
 
-    public Tag(String name) {
-        this.name = name;
-    }
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    @ToString.Exclude
+    private Category category;
+
 }
