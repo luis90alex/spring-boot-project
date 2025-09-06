@@ -26,18 +26,6 @@ public class SpringBootDemoStoreApplication {
 		user.setProfile(profile);
 		profile.setUser(user);
 		System.out.println(user);
-		var category = Category.builder()
-				.name("category1")
-				.build();
-		var product = Product
-				.builder()
-				.name("Product1")
-				.price(BigDecimal.valueOf(23.5))
-				.build();
-		System.out.println(product);
-
-		category.addProduct(product);
-		System.out.println(category);
 	}
 
 }

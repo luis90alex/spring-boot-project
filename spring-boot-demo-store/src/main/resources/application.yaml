@@ -5,14 +5,6 @@ spring:
     url: jdbc:mysql://localhost:3306/store?createDatabaseIfNotExist=true
     username: root
     password: SQLMosh.345
-app:
-  page-size: 10
-  payment-gateway: paypal
-stripe:
-  apiUrl : https://api.stripe.com
-  enabled: true
-  timeout: 1000
-  supported-currencies: USD,EUR,GBP
-user-registration:
-  host: test-host
-  port: 8080
+  jpa:
+    hibernate:
+      ddl-auto: none

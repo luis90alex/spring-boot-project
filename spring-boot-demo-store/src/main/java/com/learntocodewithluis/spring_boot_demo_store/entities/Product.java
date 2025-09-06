@@ -1,33 +1,38 @@
 package com.learntocodewithluis.spring_boot_demo_store.entities;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
-@Builder
-@Setter
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor
+@Setter
 @Entity
-@ToString
 @Table(name = "products")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, name ="id")
+    @Column(name = "id")
     private Long id;
 
-    @Column(nullable = false, name ="name")
+    @Column(name = "name")
     private String name;
 
-    @Column(nullable = false, name ="price")
+    @Column(name ="description", columnDefinition = "TEXT", nullable = false)
+    private String description;
+
+    @Column(name = "price")
     private BigDecimal price;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    @ToString.Exclude
     private Category category;
 
+    @ManyToMany(mappedBy = "products")
+    @ToString.Exclude
+    private Set<User> users = new HashSet<>();
 }
