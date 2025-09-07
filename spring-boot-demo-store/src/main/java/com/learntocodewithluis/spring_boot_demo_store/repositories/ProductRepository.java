@@ -5,6 +5,7 @@ import com.learntocodewithluis.spring_boot_demo_store.entities.Category;
 import com.learntocodewithluis.spring_boot_demo_store.entities.Product;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
@@ -28,4 +29,7 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
     void updatePriceByCategory(@Param("newPrice") BigDecimal newPrice, @Param("categoryId") Byte categoryId);
 
     List<ProductSummary> findByCategory(Category category);
+
+    @Procedure("findProductsByPrice")
+    List<Product> findProductsByPrice(BigDecimal min, BigDecimal max);
 }

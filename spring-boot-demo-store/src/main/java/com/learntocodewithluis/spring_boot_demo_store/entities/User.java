@@ -8,11 +8,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Builder
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Entity
 @Table(name = "users")
 public class User {
@@ -43,8 +43,8 @@ public class User {
     @Builder.Default
     private Set<Tag> tags = new HashSet<>();
 
-//    @OneToOne(mappedBy = "user" , cascade = CascadeType.REMOVE)
-//    private Profile profile;
+    @OneToOne(mappedBy = "user" , cascade = {CascadeType.REMOVE, CascadeType.PERSIST}, orphanRemoval = true)
+    private Profile profile;
 
     @ManyToMany
     @JoinTable(
@@ -75,6 +75,17 @@ public class User {
         tags.remove(tag);
         tag.getUsers().remove(this);
     }
+
+    public void addProfile(Profile profile){
+        this.profile = profile;
+        profile.setUser(this);
+    }
+
+    public void removeProfile(Profile profile){
+        this.profile = null;
+        profile.setUser(null);
+    }
+
 
     @Override
     public String toString() {

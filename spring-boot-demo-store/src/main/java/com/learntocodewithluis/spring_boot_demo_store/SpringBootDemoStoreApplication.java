@@ -34,7 +34,11 @@ public class SpringBootDemoStoreApplication {
         //service.updatePriceByCategory();
         //service.fetchProducts();
         //service.fetchUser();
-        service.fetchUsers();
+        //service.fetchUsers();
+        //service.fetchProductsProcedure();
+        //service.addUserAndProfile();
+        //service.fetchProfilesGreaterThan();
+        service.fetchProfilesGreaterThanFromUser();
 	}
 
 }

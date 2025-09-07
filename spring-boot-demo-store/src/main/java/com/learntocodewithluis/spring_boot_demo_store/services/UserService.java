@@ -1,9 +1,6 @@
 package com.learntocodewithluis.spring_boot_demo_store.services;
 
-import com.learntocodewithluis.spring_boot_demo_store.entities.Address;
-import com.learntocodewithluis.spring_boot_demo_store.entities.Category;
-import com.learntocodewithluis.spring_boot_demo_store.entities.Product;
-import com.learntocodewithluis.spring_boot_demo_store.entities.User;
+import com.learntocodewithluis.spring_boot_demo_store.entities.*;
 import com.learntocodewithluis.spring_boot_demo_store.repositories.*;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
@@ -11,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @Service
@@ -161,6 +159,47 @@ public class UserService {
         users.forEach(u -> {
             System.out.println(u);
             u.getAddresses().forEach(System.out::println);
+        });
+    }
+
+    @Transactional
+    public void fetchProductsProcedure(){
+        var products = productRepository.findProductsByPrice(BigDecimal.valueOf(1), BigDecimal.valueOf(54));
+        products.forEach(System.out::println);
+    }
+
+    @Transactional
+    public void addUserAndProfile(){
+        var profile = Profile.builder()
+                .bio("profile2")
+                .phoneNumber("12345")
+                .loyaltyPoints(20)
+                .dateOfBirth(LocalDate.of(1982, 1, 1))
+                .build();
+        var user =  User.builder()
+                .name("Name prof3")
+                .email("email prof3")
+                .password("pass prof3")
+                .build();
+        user.addProfile(profile);
+        userRepository.save(user);
+    }
+
+    @Transactional
+    public void fetchProfilesGreaterThan(){
+        var profiles = profileRepository.findProfilesOrderByEmail(2);
+        profiles.forEach(p -> {
+            System.out.println(p.getId());
+            System.out.println(p.getUser().getEmail());
+        });
+    }
+
+    @Transactional
+    public void fetchProfilesGreaterThanFromUser(){
+        var users = userRepository.findProfilesOrderByEmail(2);
+        users.forEach(u -> {
+            System.out.println(u.getId());
+            System.out.println(u.getEmail());
         });
     }
 }
