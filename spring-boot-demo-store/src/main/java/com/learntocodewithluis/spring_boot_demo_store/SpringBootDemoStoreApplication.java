@@ -2,6 +2,8 @@ package com.learntocodewithluis.spring_boot_demo_store;
 
 
 import com.learntocodewithluis.spring_boot_demo_store.entities.*;
+import com.learntocodewithluis.spring_boot_demo_store.repositories.UserRepository;
+import com.learntocodewithluis.spring_boot_demo_store.services.UserService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -18,14 +20,11 @@ public class SpringBootDemoStoreApplication {
 				.password("pass")
 				.email("test@gmail.com")
 				.build();
-
-		user.addTag("tag1");
-		var profile = Profile.builder()
-				.bio("bio")
-				.build();
-		user.setProfile(profile);
-		profile.setUser(user);
-		System.out.println(user);
+        var repository = context.getBean(UserRepository.class);
+        //repository.deleteById(1L);
+        var service = context.getBean(UserService.class);
+        //service.showEntityStates();
+        service.fetchAddress();
 	}
 
 }
