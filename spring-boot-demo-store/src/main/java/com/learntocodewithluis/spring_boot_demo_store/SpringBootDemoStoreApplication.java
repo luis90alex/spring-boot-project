@@ -24,7 +24,13 @@ public class SpringBootDemoStoreApplication {
         //repository.deleteById(1L);
         var service = context.getBean(UserService.class);
         //service.showEntityStates();
-        service.fetchAddress();
+        //service.persistRelated();
+        //service.deleteRelated();
+        //service.addNewProductNewCategory();
+        //service.addNewProductForExistingCategory();
+        //service.addNewProductsToUserWishlist();
+        //service.deleteExistingProduct();
+        service.deleteExistingProductWithPreviousModification();
 	}
 
 }
