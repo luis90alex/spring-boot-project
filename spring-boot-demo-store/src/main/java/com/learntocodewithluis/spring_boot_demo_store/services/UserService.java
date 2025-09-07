@@ -137,4 +137,30 @@ public class UserService {
     public void deleteExistingProductWithPreviousModification(){
         productRepository.deleteById(1L);
     }
+
+    @Transactional
+    public void updatePriceByCategory(){
+        productRepository.updatePriceByCategory(BigDecimal.valueOf(21.3), (byte) 2);
+    }
+
+    public void fetchProducts(){
+        var products = productRepository.findByCategory(new Category((byte)2));
+        products.forEach(System.out::println);
+    }
+
+    @Transactional
+    public void fetchUser(){
+        var user = userRepository.findByEmail("email2").orElseThrow();
+        System.out.println(user);
+
+    }
+
+    @Transactional
+    public void fetchUsers(){
+        var users = userRepository.findAllWithAddresses();
+        users.forEach(u -> {
+            System.out.println(u);
+            u.getAddresses().forEach(System.out::println);
+        });
+    }
 }

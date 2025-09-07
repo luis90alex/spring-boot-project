@@ -20,7 +20,7 @@ public class SpringBootDemoStoreApplication {
 				.password("pass")
 				.email("test@gmail.com")
 				.build();
-        var repository = context.getBean(UserRepository.class);
+        //var repository = context.getBean(UserRepository.class);
         //repository.deleteById(1L);
         var service = context.getBean(UserService.class);
         //service.showEntityStates();
@@ -30,7 +30,11 @@ public class SpringBootDemoStoreApplication {
         //service.addNewProductForExistingCategory();
         //service.addNewProductsToUserWishlist();
         //service.deleteExistingProduct();
-        service.deleteExistingProductWithPreviousModification();
+        //service.deleteExistingProductWithPreviousModification();
+        //service.updatePriceByCategory();
+        //service.fetchProducts();
+        //service.fetchUser();
+        service.fetchUsers();
 	}
 
 }
