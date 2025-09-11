@@ -2,9 +2,12 @@ package com.learntocodewithluis.spring_boot_demo_store.services;
 
 import com.learntocodewithluis.spring_boot_demo_store.entities.*;
 import com.learntocodewithluis.spring_boot_demo_store.repositories.*;
+import com.learntocodewithluis.spring_boot_demo_store.repositories.specifications.ProductSpec;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.*;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -201,5 +204,80 @@ public class UserService {
             System.out.println(u.getId());
             System.out.println(u.getEmail());
         });
+    }
+
+    @Transactional
+    public void fetchProductsByExample(){
+        var product = new Product();
+
+        product.setName("Product");
+        var matcher = ExampleMatcher.matching()
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING)
+                .withIncludeNullValues()
+                .withIgnorePaths("id", "description");
+        var example = Example.of(product, matcher);
+        productRepository.findAll(example).forEach(System.out::println);
+    }
+
+    @Transactional
+    public void fetchProductsByCriteriaAPI(){
+        var products = productRepository.findProductsByCriteria(null, BigDecimal.valueOf(1), BigDecimal.valueOf(10));
+        products.forEach(System.out::println);
+    }
+
+    public void fetchProductsBySpecificationAPI(String name, BigDecimal minPrice, BigDecimal maxPrice){
+
+        Specification<Product> spec = Specification.where(null);
+        if  (name != null) {
+            spec = spec.and(ProductSpec.hasName(name));
+        }
+        if (minPrice != null) {
+            spec = spec.and(ProductSpec.hasPriceGreaterThanOrEqualTo(minPrice));
+        }
+        if (maxPrice != null) {
+            spec = spec.and(ProductSpec.hasPriceLessThanOrEqualTo(maxPrice));
+        }
+        productRepository.findAll(spec).forEach(System.out::println);
+
+    }
+
+    public void fetchSortedProducts(){
+        var sort = Sort.by("name").and
+                (Sort.by("price").descending()
+                );
+        productRepository.findAll(sort);
+    }
+
+    public void fetchPaginatedProducts(int pageNumber, int size){
+
+        PageRequest pageRequest = PageRequest.of(pageNumber, size);
+        Page<Product> page = productRepository.findAll(pageRequest);
+
+        var products = page.getContent();
+        products.forEach(System.out::println);
+
+        var totalPages = page.getTotalPages();
+        var totalElements = page.getTotalElements();
+
+        System.out.println("Total elements: " + totalElements);
+        System.out.println("Total pages: " + totalPages);
+
+    }
+
+    @Transactional
+    public void fetchProductsByCategoryCriteriaAPI() {
+        var products = productRepository.findProductsByCategory((byte) 1);
+        products.forEach(System.out::println);
+    }
+
+    @Transactional
+    public void fetchProductsByCategorySpecificationAPI(Byte category_id) {
+        Specification<Product> spec = Specification.where(null);
+
+        if  (category_id != null) {
+            spec = spec.and(ProductSpec.filterByCategory(category_id));
+        }
+        var products = productRepository.findAll(spec);
+        products.forEach(System.out::println);
     }
 }

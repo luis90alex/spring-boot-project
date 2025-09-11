@@ -38,7 +38,14 @@ public class SpringBootDemoStoreApplication {
         //service.fetchProductsProcedure();
         //service.addUserAndProfile();
         //service.fetchProfilesGreaterThan();
-        service.fetchProfilesGreaterThanFromUser();
+        //service.fetchProfilesGreaterThanFromUser();
+        //service.fetchProductsByExample();
+        //service.fetchProductsByCriteriaAPI();
+        //service.fetchProductsBySpecificationAPI("Product", BigDecimal.valueOf(1), BigDecimal.valueOf(200));
+        //service.fetchSortedProducts();
+        //service.fetchPaginatedProducts(3,4);
+        //service.fetchProductsByCategoryCriteriaAPI();
+        service.fetchProductsByCategorySpecificationAPI((byte) 1);
 	}
 
 }
